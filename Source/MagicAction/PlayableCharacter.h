@@ -4,10 +4,11 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+// #include "InputAction.h"
+// #include "InputActionValue.h"
+// #include "InputMappingContext.h"
+#include "Components/StaticMeshComponent.h"
 #include "PlayableCharacter.generated.h"
-#include "InputAction.h"
-#include "InputActionValue.h"
-#include "InputMappingContext.h"
 
 UCLASS()
 class MAGICACTION_API APlayableCharacter : public ACharacter
@@ -31,8 +32,8 @@ public:
 
 private:
 	void SetupInput();
-	void MovePlayer();
 	void MovePlayerAction();
 	class UInputAction* ActionInput;
 	class UInputMappingContext* DefaultMappingContext;
+	class UStaticMesh* Mesh;
 };
