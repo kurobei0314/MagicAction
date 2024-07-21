@@ -37,6 +37,7 @@ void APlayableCharacter::BeginPlay()
 void APlayableCharacter::MovePlayerAction()
 {
 	UE_LOG(LogTemp, Warning, TEXT("W"));
+	
 }
 
 // Called every frame
@@ -51,7 +52,7 @@ void APlayableCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputC
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
 	if(PlayerInputComponent)
-	{
+	{	
 		if (UEnhancedInputComponent* EnhancedInputComponent = CastChecked<UEnhancedInputComponent>(PlayerInputComponent))
 		{
 			EnhancedInputComponent->BindAction(ActionInput, ETriggerEvent::Triggered, this, &APlayableCharacter::MovePlayerAction);
