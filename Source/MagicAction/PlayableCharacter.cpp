@@ -34,12 +34,11 @@ void APlayableCharacter::BeginPlay()
 	}
 }
 
-void APlayableCharacter::MovePlayerAction(const FInputActionValue& ActionValue)
+void APlayableCharacter::MovePlayerAction(const FInputActionInstance& ActionValue)
 {
-	FVector2D vector = ActionValue.Get<FVector2D>();
-	UE_LOG(LogTemp, Log, TEXT("MyIntValueX=%lf"), vector.X);
-	UE_LOG(LogTemp, Log, TEXT("MyIntValueY=%lf"), vector.Y);
+	FVector2D vector = ActionValue.GetValue().Get<FVector2D>();
 	this->AddMovementInput(FVector::ForwardVector * 20.0f * vector.X);
+	this->AddMovementInput(FVector::RightVector * 20.0f * vector.Y);
 }
 
 // Called every frame
