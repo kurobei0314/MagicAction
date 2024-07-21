@@ -32,7 +32,7 @@ public:
 
 private:
 	void SetupInput();
-	void MovePlayerAction();
+	void MovePlayerAction(const FInputActionValue& ActionValue);
 	class UInputAction* ActionInput;
 	class UInputMappingContext* DefaultMappingContext;
 	class UStaticMesh* Mesh;
