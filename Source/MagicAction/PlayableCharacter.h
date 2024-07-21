@@ -4,9 +4,9 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
-// #include "InputAction.h"
-// #include "InputActionValue.h"
-// #include "InputMappingContext.h"
+#include "InputAction.h"
+#include "InputActionValue.h"
+#include "InputMappingContext.h"
 #include "Components/StaticMeshComponent.h"
 #include "PlayableCharacter.generated.h"
 

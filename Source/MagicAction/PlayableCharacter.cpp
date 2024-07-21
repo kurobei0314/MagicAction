@@ -7,37 +7,40 @@
 #include "Kismet/GameplayStatics.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
+#include "InputMappingContext.h"
 
 
 // Sets default values
 APlayableCharacter::APlayableCharacter()
 {
-	UKismetSystemLibrary::PrintString(this, TEXT("start"), true, true, FColor::Cyan, 10.0f, TEXT("None"));
- 	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+	UE_LOG(LogTemp, Warning, TEXT("start"));
 	PrimaryActorTick.bCanEverTick = true;
 	ActionInput = LoadObject<UInputAction>(NULL, TEXT("/Game/Inputs/IA_Move"), NULL, LOAD_None, NULL);
-	// DefaultMappingContext = LoadObject<UInputMappingContext>(NULL, TEXT("/Game/Inputs/IMC_Default"), NULL, LOAD_None, NULL);
+	DefaultMappingContext = LoadObject<UInputMappingContext>(NULL, TEXT("/Game/Inputs/IMC_Default"), NULL, LOAD_None, NULL);
 	Mesh = LoadObject<UStaticMesh>(nullptr, TEXT("/Game/Character/Textures_hw/unitychan_hw"));
-	APlayerController* controller = UGameplayStatics::GetPlayerController(GetWorld(), 0);
-	if (ULocalPlayer* LocalPlayer = Cast<ULocalPlayer>(controller->GetNetOwningPlayer()))
-	{
-		if(UEnhancedInputLocalPlayerSubsystem* Subsystem = LocalPlayer->GetSubsystem<UEnhancedInputLocalPlayerSubsystem>())
-			{
-				Subsystem->AddMappingContext(DefaultMappingContext, 0);
-			}
-	}
 }
 
 // Called when the game starts or when spawned
 void APlayableCharacter::BeginPlay()
 {
-	UKismetSystemLibrary::PrintString(this, TEXT("BeginPlay"), true, true, FColor::Cyan, 10.0f, TEXT("None"));
 	Super::BeginPlay();
+
+	APlayerController* controller = UGameplayStatics::GetPlayerController(GetWorld(), 0);
+	if (!controller) return;
+	if (ULocalPlayer* LocalPlayer = controller->GetLocalPlayer())
+	{
+		if(UEnhancedInputLocalPlayerSubsystem* Subsystem = LocalPlayer->GetSubsystem<UEnhancedInputLocalPlayerSubsystem>())
+		{
+			if (!DefaultMappingContext) return;
+			Subsystem->AddMappingContext(DefaultMappingContext, 0);
+		}
+	}
 }
 
 void APlayableCharacter::MovePlayerAction()
 {
-	UKismetSystemLibrary::PrintString(this, TEXT("W"), true, true, FColor::Cyan, 10.0f, TEXT("None"));
+	// UKismetSystemLibrary::PrintString(this, TEXT("W"), true, true, FColor::Cyan, 10.0f, TEXT("None"));
+	UE_LOG(LogTemp, Warning, TEXT("W"));
 }
 
 // Called every frame
