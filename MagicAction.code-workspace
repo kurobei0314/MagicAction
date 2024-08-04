@@ -14,7 +14,16 @@
 		"files.associations": {
 			"__config": "cpp",
 			"iosfwd": "cpp",
-			"vector": "cpp"
+			"vector": "cpp",
+			"__bit_reference": "cpp",
+			"__node_handle": "cpp",
+			"bitset": "cpp",
+			"__memory": "cpp",
+			"limits": "cpp",
+			"locale": "cpp",
+			"optional": "cpp",
+			"ratio": "cpp",
+			"tuple": "cpp"
 		}
 	},
 	"extensions": {

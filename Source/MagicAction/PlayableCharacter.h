@@ -33,7 +33,8 @@ public:
 private:
 	void SetupInput();
 	void MovePlayerAction(const FInputActionInstance& ActionValue);
-	class UInputAction* ActionInput;
+	void RotateCamera(const FInputActionInstance& Value);
+	class UInputAction* MoveInput;
+	class UInputAction* LookInput;
 	class UInputMappingContext* DefaultMappingContext;
-	class UStaticMesh* Mesh;
 };

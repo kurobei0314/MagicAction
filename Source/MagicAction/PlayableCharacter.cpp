@@ -13,7 +13,8 @@
 APlayableCharacter::APlayableCharacter()
 {
 	PrimaryActorTick.bCanEverTick = true;
-	ActionInput = LoadObject<UInputAction>(NULL, TEXT("/Game/Inputs/IA_Move"), NULL, LOAD_None, NULL);
+	MoveInput = LoadObject<UInputAction>(NULL, TEXT("/Game/Inputs/IA_Move"), NULL, LOAD_None, NULL);
+	LookInput = LoadObject<UInputAction>(NULL, TEXT("/Game/Inputs/IA_Look"), NULL, LOAD_None, NULL);
 	DefaultMappingContext = LoadObject<UInputMappingContext>(NULL, TEXT("/Game/Inputs/IMC_Default"), NULL, LOAD_None, NULL);
 }
 
@@ -36,9 +37,15 @@ void APlayableCharacter::BeginPlay()
 
 void APlayableCharacter::MovePlayerAction(const FInputActionInstance& ActionValue)
 {
-	FVector2D vector = ActionValue.GetValue().Get<FVector2D>();
-	this->AddMovementInput(FVector::ForwardVector * 20.0f * vector.X);
-	this->AddMovementInput(FVector::RightVector * 20.0f * vector.Y);
+	FVector2D Vector = ActionValue.GetValue().Get<FVector2D>();
+	this->AddMovementInput(FVector::ForwardVector * 20.0f * Vector.X);
+	this->AddMovementInput(FVector::RightVector * 20.0f * Vector.Y);
+}
+
+void APlayableCharacter::RotateCamera(const FInputActionInstance& ActionValue)
+{
+	float Value = ActionValue.GetValue().Get<float>();
+	this->AddControllerYawInput(Value);
 }
 
 // Called every frame
@@ -56,7 +63,8 @@ void APlayableCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputC
 	{	
 		if (UEnhancedInputComponent* EnhancedInputComponent = CastChecked<UEnhancedInputComponent>(PlayerInputComponent))
 		{
-			EnhancedInputComponent->BindAction(ActionInput, ETriggerEvent::Triggered, this, &APlayableCharacter::MovePlayerAction);
+			EnhancedInputComponent->BindAction(MoveInput, ETriggerEvent::Triggered, this, &APlayableCharacter::MovePlayerAction);
+			EnhancedInputComponent->BindAction(LookInput, ETriggerEvent::Triggered, this, &APlayableCharacter::RotateCamera);
 		}
 	}
 }
