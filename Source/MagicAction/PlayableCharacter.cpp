@@ -7,9 +7,8 @@
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "InputMappingContext.h"
+#include "Camera/CameraComponent.h"
 
-
-// Sets default values
 APlayableCharacter::APlayableCharacter()
 {
 	PrimaryActorTick.bCanEverTick = true;
@@ -18,7 +17,6 @@ APlayableCharacter::APlayableCharacter()
 	DefaultMappingContext = LoadObject<UInputMappingContext>(NULL, TEXT("/Game/Inputs/IMC_Default"), NULL, LOAD_None, NULL);
 }
 
-// Called when the game starts or when spawned
 void APlayableCharacter::BeginPlay()
 {
 	Super::BeginPlay();
@@ -33,13 +31,14 @@ void APlayableCharacter::BeginPlay()
 			Subsystem->AddMappingContext(DefaultMappingContext, 0);
 		}
 	}
+	Camera = this->FindComponentByClass<UCameraComponent>();
 }
 
 void APlayableCharacter::MovePlayerAction(const FInputActionInstance& ActionValue)
 {
 	FVector2D Vector = ActionValue.GetValue().Get<FVector2D>();
-	this->AddMovementInput(FVector::ForwardVector * 20.0f * Vector.X);
-	this->AddMovementInput(FVector::RightVector * 20.0f * Vector.Y);
+	this->AddMovementInput(Camera->GetForwardVector() * 20.0f * Vector.X);
+	this->AddMovementInput(Camera->GetRightVector() * 20.0f * Vector.Y);
 }
 
 void APlayableCharacter::RotateCamera(const FInputActionInstance& ActionValue)
@@ -48,13 +47,11 @@ void APlayableCharacter::RotateCamera(const FInputActionInstance& ActionValue)
 	this->AddControllerYawInput(Value);
 }
 
-// Called every frame
 void APlayableCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 }
 
-// Called to bind functionality to input
 void APlayableCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);

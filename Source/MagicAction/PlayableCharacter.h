@@ -8,6 +8,7 @@
 #include "InputActionValue.h"
 #include "InputMappingContext.h"
 #include "Components/StaticMeshComponent.h"
+#include "Camera/CameraComponent.h"
 #include "PlayableCharacter.generated.h"
 
 UCLASS()
@@ -37,4 +38,5 @@ private:
 	class UInputAction* MoveInput;
 	class UInputAction* LookInput;
 	class UInputMappingContext* DefaultMappingContext;
+	class UCameraComponent* Camera;
 };
